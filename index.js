@@ -34,9 +34,10 @@ app.use(orderRouter);
 // app.use(cors()); //enable CORS for all routes and origin(domain),
 
 DB = process.env.MONGO_URI;
-
+// console.log(DB);
 mongoose.connect(DB).then(
-    ()=>console.log("Connected to MongoDB..!")).
+    
+    ()=>console.log("Connected to DB:", db.databaseName),).
     catch(error => console.error("MongoDB connection error: " + error));
 
 
