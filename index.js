@@ -37,7 +37,7 @@ DB = process.env.MONGO_URI;
 // console.log(DB);
 mongoose.connect(DB).then(
     
-    ()=>console.log("Connected to DB:", db.databaseName),).
+    ()=>console.log("Connected to Mongo DB"),).
     catch(error => console.error("MongoDB connection error: " + error));
 
 
