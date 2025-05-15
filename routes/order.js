@@ -1,5 +1,5 @@
-const express = require("express");
-const orderRouter = express.Router();
+const express = require("express"); // express will enable to api routers 
+const orderRouter = express.Router(); // and we initialize express router
 
 const Order = require('../models/order');
 //Post route for creating orders
@@ -140,4 +140,13 @@ orderRouter.patch('/api/orders/:id/processing', async (req, res) => {
     }
 });
 
+
+orderRouter.get('/api/orders', async (req, res) => {
+    try {
+        const orders = await Order.find();    
+        return res.status(200).send(orders);
+    } catch (e) {
+        res.status(500).json({error: e.message});
+    }
+});
 module.exports = orderRouter;
