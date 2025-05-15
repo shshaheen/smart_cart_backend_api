@@ -144,7 +144,7 @@ orderRouter.patch('/api/orders/:id/processing', async (req, res) => {
 orderRouter.get('/api/orders', async (req, res) => {
     try {
         const orders = await Order.find();    
-        return res.status(200).send(orders);
+        return res.status(200).json(orders);
     } catch (e) {
         res.status(500).json({error: e.message});
     }
