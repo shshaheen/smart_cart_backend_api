@@ -59,4 +59,4 @@ const vendorAuth = (req, res, next) =>{
     }
 };
 
-module.export = {auth, vendorAuth};
+module.exports = {auth, vendorAuth};
