@@ -1,6 +1,6 @@
 const express = require("express"); // express will enable to api routers 
 const orderRouter = express.Router(); // and we initialize express router
-
+const {auth, vendorAuth} = require('../middleware/auth'); // import the authentication middleware
 const Order = require('../models/order');
 //Post route for creating orders
 orderRouter.post('/api/orders', async (req, res) => {
@@ -44,7 +44,7 @@ orderRouter.post('/api/orders', async (req, res) => {
 });
  
 //Get route for fetching all orders by buyerId
-orderRouter.get('/api/orders/buyers/:buyerId', async (req, res) => {
+orderRouter.get('/api/orders/buyers/:buyerId',auth, async (req, res) => {
     try {
         // extract buyerId from request parameters
         const buyerId = req.params.buyerId;
@@ -63,7 +63,7 @@ orderRouter.get('/api/orders/buyers/:buyerId', async (req, res) => {
 });
 
 //Get route for fetching all orders by vendorId
-orderRouter.get('/api/orders/vendors/:vendorId', async (req, res) => {
+orderRouter.get('/api/orders/vendors/:vendorId', auth, vendorAuth,async (req, res) => {
     try {
         // extract vendorId from request parameters
         const vendorId = req.params.vendorId;
@@ -139,6 +139,7 @@ orderRouter.patch('/api/orders/:id/processing', async (req, res) => {
         res.status(500).json({error: e.message});
     }
 });
+
 
 
 orderRouter.get('/api/orders', async (req, res) => {
