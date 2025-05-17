@@ -155,5 +155,34 @@ productRouter.get('/api/search-products', async (req, res) => {
      catch (e) {
         return res.status(500).json({error: e.message});
     }
-})
+});
+
+
+//Route to edit an existing product
+productRouter.put('/api/edit-product/:productId', auth, vendorAuth, async (req, res) => {
+    try {
+        // Extract the productId from the request parameters and the updated product details from the request body
+        const {productId} = req.params;
+        const product = await Product.findById(productId);
+        // Check if the product exists and if the vendor is authorized to edit it
+        if(!product){
+            return res.status(404).json({msg:"Product not found"});
+        }
+        if(product.vendorId.toString() !== req.user.id.toString()){
+            return res.status(403).json({msg:"You are not authorized to edit this product"});
+        }
+        // Destructure the req.body to exclude vendorId
+        const {vendorId, ...updatedProductDetails} = req.body;
+        // Update the product with the new details
+        const updatedProduct = await Product.findByIdAndUpdate(
+            productId, 
+            {$set: updatedProductDetails},// update only fields in the updateData
+             {new: true}// return the updated product document in the response
+            );
+        // Return a success message with the updated product details
+        return res.status(200).json(updatedProduct);
+    } catch (e) {
+        return res.status(500).json({error: e.message});
+    }
+});
 module.exports = productRouter;
