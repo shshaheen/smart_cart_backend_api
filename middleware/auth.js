@@ -5,7 +5,7 @@ const Vendor = require('../models/vendor')
 //authentication middleware
 //this middleware function checks if user is authenticated
 
-const auth = async(req,res, nex) =>{
+const auth = async(req,res, next) =>{
     try {
         // extract the token from the request headers
         const token = req.header('x-auth-token');
@@ -37,7 +37,7 @@ const auth = async(req,res, nex) =>{
         req.token = token;
         //proceed to the next middleware or route handler
         next()
-    } catch (error) {
+    } catch (e) {
         res.status(500).json({error: e.message});
     }
 };
@@ -55,7 +55,7 @@ const vendorAuth = (req, res, next) =>{
 
     // if the user is a vendor, proceed to the next middleware or route handler
     next();}catch(e){
-        return res.status(500).json({error:e/message});
+        return res.status(500).json({error:e.message});
     }
 };
 
