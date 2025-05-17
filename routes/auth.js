@@ -23,8 +23,6 @@ try {
 }
 });
 
-
-
 //End point for sign in api
 authRouter.post('/api/signin', async (req,res)=>{
 try {
@@ -49,7 +47,7 @@ try {
 });
 
 
-// Put route for updaating user state, city and locality
+// Put route for updating user state, city and locality
 authRouter.put('/api/users/:id',async(req, res)=>{
     try {
         // Extract the 'id' parameter from the request url
